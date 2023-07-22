@@ -1,19 +1,20 @@
-import { Fragment, Suspense, useState } from 'react'
-import Adminpage from './pages/Adminpage'
+import { Fragment, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
-import Dashboard from './pages/dashboard/dashboard'
+import "../src/assets/css/style.css"
 import Loader from './components/Loader'
-import Postjob from './pages/job/postjob'
-import Joblist from './pages/job/Joblist'
-import JobUpdate from './pages/job/JobUpdate'
-import Events from './pages/event/Events'
-import Createevent from './pages/event/Createevent'
 import SignIn from './pages/Authentication/SignIn'
 import ResetPassword from './pages/Authentication/ResetPassword'
-import AddAlumni from './pages/user/AddAlumni'
-import Alumnis from './pages/user/Alumnis'
-import Students from './pages/user/Students'
+import CreateJobpage from './pages/job/CreateJobpage'
+import JoblistPage from './pages/job/JoblistPage'
+import CreateEventPage from './pages/event/CreateEventPage'
+import EventListPage from './pages/event/EventListPage'
+import AddAlumniPage from './pages/user/AddAlumniPage'
+import AlumniListPage from './pages/user/AlumniListPage'
+import StudentListPage from './pages/user/StudentListPage'
+import ChangePasswordPage from './pages/ChangePasswordPage'
+import Dashboard from './pages/dashboard/Dashboard'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
@@ -27,11 +28,12 @@ function App() {
           <Route path="/resetpass" element={<ResetPassword />} />
           <Route element={<DefaultLayout />} >
             <Route index element={< Dashboard />} />
+            <Route path='/calendar' element={< Loader />} />
             <Route
               path="/job/postjob"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Postjob />
+                  <CreateJobpage />
                 </Suspense>
               }
             />
@@ -39,15 +41,7 @@ function App() {
               path="/job/joblist"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Joblist />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/job/jobupdate"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <JobUpdate />
+                  <JoblistPage />
                 </Suspense>
               }
             />
@@ -55,7 +49,7 @@ function App() {
               path="/event/eventlist"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Events />
+                  <EventListPage />
                 </Suspense>
               }
             />
@@ -63,7 +57,7 @@ function App() {
               path="/event/eventcreate"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Createevent />
+                  <CreateEventPage />
                 </Suspense>
               }
             />
@@ -71,7 +65,15 @@ function App() {
               path="/users/addalumni"
               element={
                 <Suspense fallback={<Loader />}>
-                  <AddAlumni />
+                  <AddAlumniPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/users/alumni/:id"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <AddAlumniPage />
                 </Suspense>
               }
             />
@@ -79,7 +81,7 @@ function App() {
               path="/users/alumni"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Alumnis />
+                  <AlumniListPage />
                 </Suspense>
               }
             />
@@ -87,13 +89,22 @@ function App() {
               path="/users/students"
               element={
                 <Suspense fallback={<Loader />}>
-                  <Students />
+                  <StudentListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/changePassword"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <ChangePasswordPage />
                 </Suspense>
               }
             />
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster position="top-right" reverseOrder={false} />
     </Fragment>
   )
 }

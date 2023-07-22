@@ -5,15 +5,10 @@ import CardThree from '../../components/dashboard/CardThree'
 import CardFour from '../../components/dashboard/CardFour'
 import Userlist from '../../components/dashboard/Userlist'
 import Chats from '../../components/dashboard/Chats'
-import { alumninfoReq } from '../../api/apiReq'
 
 const Dashboard = () => {
 
-  useEffect(()=>{
- alumninfoReq()
-
-
-  },[])
+  
   return (
     <Fragment>
        
