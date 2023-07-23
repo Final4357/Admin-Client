@@ -1,28 +1,31 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Loader from '../Loader'
-import { alumniList } from '../../redux/features/users/userSlice'
 import { store } from '../../redux/store/store'
+import { alumniListRequest } from '../../apiRequest/userRequest'
+import { setID } from '../../redux/state/userSlice'
 
 const AlumniList = ({ setShowModal }) => {
   const alumni = useSelector((state) => state.user.alumni)
   const totalAlumni = useSelector((state) => state.user.totalAlumni)
   const loading = useSelector((state) => state.user.loading)
-  const error = useSelector((state) => state.user.error)
 
   const [pageNo, setPageNo] = useState(0);
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(alumniList({ pageNo: pageNo+1, perPage: 5, searchKey: "0" }))
+        alumniListRequest(pageNo+1, 5,"0")
     }, [pageNo])
 
     const handlePageClick = async (e) => {
-      store.dispatch(setPageNo(e.selected))
+      setPageNo(e.selected)
     };
+
+    const onView = (id) =>{
+      setShowModal(true);
+      store.dispatch(setID(id))
+    }
 
   return (
     <Fragment>
@@ -87,7 +90,7 @@ const AlumniList = ({ setShowModal }) => {
                         </td>
                         <td className="h-fit border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <div className="flex items-center space-x-3.5">
-                            <button onClick={() => setShowModal(true)} className="hover:text-primary">
+                            <button onClick={() => onView(item._id)} className="hover:text-primary">
 
                               <svg
                                 className="fill-current"
@@ -137,7 +140,7 @@ const AlumniList = ({ setShowModal }) => {
                               </svg>
                             </button>
 
-                            <Link to="/users/alumni/123456">
+                            <Link to={`/users/alumni/${item._id}`}>
                               <svg className='h-5 w-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M21 6.757l-2 2V4h-9v5H5v11h14v-2.757l2-2v5.765a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 20.993V8l6.003-6h10.995C20.55 2 21 2.455 21 2.992v3.765zm.778 2.05l1.414 1.415L15.414 18l-1.416-.002.002-1.412 7.778-7.778z" /> </g> </svg>
                             </Link>
                           </div>

@@ -1,6 +1,14 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { alumniDetailsById } from '../../apiRequest/userRequest'
 
 const AlumniInfoModel = ({setShowModal}) => {
+    const id = useSelector((state) => state.user.id)
+    const profileDetails = useSelector((state) => state.user.profileDetails)
+    useEffect(()=>{
+        alumniDetailsById(id)
+    },[id])
+
   return (
     <Fragment>
             <div
@@ -25,77 +33,77 @@ const AlumniInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Name </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">React Developer</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.firstname+" "+profileDetails?.lastname}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Email </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">40000-45000 BDT</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.email}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Student ID</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">www.enosislimited.com/apply</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails.studentId}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Position</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">20th july, 2023</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.position}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Company</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Fulltime</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.company}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Degree</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Entry</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.degree}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Department</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Kumira, Chattogram</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.dept}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Batch</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">ABC Limited</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.batch}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Gender</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Onsite</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.gender}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Contact No</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">ABC Limited</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.phone}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Address</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Onsite</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.address}</p>
                             </div>
                         </div>
                     </div>
