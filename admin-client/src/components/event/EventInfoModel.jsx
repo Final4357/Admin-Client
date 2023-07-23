@@ -1,13 +1,23 @@
 import React, { Fragment } from 'react'
+import { useSelector } from 'react-redux'
+import moment from 'moment';
+import { eventDetailsById } from '../../apiRequest/eventRequest'
+import { useEffect } from 'react'
 
 const EventInfoModel = ({setShowModal}) => {
+    const id = useSelector((state) => state.event.eventId)
+    const eventDetails = useSelector((state) => state.event.eventDetails)
+    console.log(eventDetails)
+    useEffect(()=>{
+        eventDetailsById(id)
+    },[id])
     return (
         <Fragment>
             <div
                 className="flex justify-center items-center overflow-x-hidden no-scrollbar fixed inset-0 z-999 outline-none focus:outline-none"
             >
                 <div onClick={() => setShowModal(false)} className="fixed h-full w-full left-0 top-0 bg-black bg-opacity-50 z-[-1]"></div>
-                <div className="relative left-24 w-1/2 h-1/2 my-6 mx-auto ">
+                <div className="relative left-24 w-2/4 h-1/2 my-6 mx-auto ">
                     <div className="p-3 rounded-lg shadow-lg relative w-full bg-white outline-none focus:outline-none">
                         <div className="flex items-start justify-between p-2 border-b border-solid border-slate-200 rounded-t">
                             <h3 className="text-3xl font-semibold">
@@ -25,63 +35,56 @@ const EventInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Title </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">React Developer</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.title}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Topic </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">40000-45000 BDT</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.topic}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Venue </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">www.enosislimited.com/apply</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.venue}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Date</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">20th july, 2023</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{moment(eventDetails.date).format("D MMM, YYYY")}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Starting Time</p>
+                                    <p class="text-base font-semibold dark:text-white text-gray-800">Time</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Fulltime</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[130px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">End Time</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Entry</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.startTime+" - "+eventDetails.endTime}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Event Website</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Kumira, Chattogram</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.eventWebsite}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Link (optionl)</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">ABC Limited</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.link}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Open For</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Onsite</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.openTo.map((ele, i)=>ele+", ")}</p>
                             </div>
                         </div>
                     </div>
