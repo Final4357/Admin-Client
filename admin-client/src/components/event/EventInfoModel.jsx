@@ -7,10 +7,10 @@ import { useEffect } from 'react'
 const EventInfoModel = ({setShowModal}) => {
     const id = useSelector((state) => state.event.eventId)
     const eventDetails = useSelector((state) => state.event.eventDetails)
-    console.log(eventDetails)
     useEffect(()=>{
         eventDetailsById(id)
     },[id])
+
     return (
         <Fragment>
             <div

@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { store } from '../../redux/store/store';
 import { alumniDetailsById, updateAlumni } from '../../apiRequest/userRequest';
 import { useSelector } from 'react-redux';
-import { ErrorToast, IsEmail, IsEmpty } from '../../helper/formHelper';
+import { ErrorToast, IsEmail, IsEmpty, getBase64 } from '../../helper/formHelper';
 import { setDetails } from '../../redux/state/userSlice';
 
 const AddAlumni = () => {
@@ -13,7 +13,13 @@ const AddAlumni = () => {
     let params = useParams()
     const location = useLocation()
     let navigate = useNavigate()
-    console.log(profile)
+
+    const previewImage = () => {
+        let ImgFile = userImgRef.files[0];
+        getBase64(ImgFile).then((base64Img) => {
+          userImgView.src = base64Img;
+        })
+      }
     
     let getProfileData = (e) => {
         console.log(e.target)
@@ -102,7 +108,7 @@ const AddAlumni = () => {
                                 type="file"
                                 id='file-input'
                                 className='absolute opacity-0'
-                                // onChange={previewImage}
+                                onChange={previewImage}
                             ref={(input) => userImgRef = input}
                             />
                         </div>

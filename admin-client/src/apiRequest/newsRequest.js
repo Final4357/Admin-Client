@@ -14,6 +14,7 @@ export const newsDetailsById = async (id) => {
         const result = await axios.get(url);
         if (result.status === 200) {
             if (result.data.data.length > 0) {
+                
                 store.dispatch(setNewsDetails(result.data.data[0]))
             } else {
                 store.dispatch(setNewsDetails(null))

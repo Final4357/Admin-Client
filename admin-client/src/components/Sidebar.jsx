@@ -257,7 +257,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                                                 (isActive && '!text-white')
                                                             }
                                                         >
-                                                            Alumnis
+                                                            Alumnis List
                                                         </NavLink>
                                                     </li>
                                                     <li>
@@ -268,7 +268,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                                                 (isActive && '!text-white')
                                                             }
                                                         >
-                                                            Students
+                                                            Students List
                                                         </NavLink>
                                                     </li>
                                                     <li>
@@ -279,7 +279,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                                                 (isActive && '!text-white')
                                                             }
                                                         >
-                                                            Admin
+                                                            Add Admin
+                                                        </NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink
+                                                            to="/users/admin"
+                                                            className={({ isActive }) =>
+                                                                'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                                                                (isActive && '!text-white')
+                                                            }
+                                                        >
+                                                            Admin List
                                                         </NavLink>
                                                     </li>
 

@@ -1,29 +1,36 @@
-import { Fragment, Suspense } from 'react'
+import { Fragment, Suspense, lazy, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import "../src/assets/css/style.css"
 import Loader from './components/Loader'
 import SignIn from './pages/Authentication/SignIn'
 import ResetPassword from './pages/Authentication/ResetPassword'
-import CreateJobpage from './pages/job/CreateJobpage'
-import JoblistPage from './pages/job/JoblistPage'
-import CreateEventPage from './pages/event/CreateEventPage'
-import EventListPage from './pages/event/EventListPage'
-import AddAlumniPage from './pages/user/AddAlumniPage'
-import AlumniListPage from './pages/user/AlumniListPage'
-import StudentListPage from './pages/user/StudentListPage'
-import ChangePasswordPage from './pages/ChangePasswordPage'
+const CreateJobpage = lazy(() => import('./pages/job/CreateJobpage'))
+const JoblistPage = lazy(() => import('./pages/job/JoblistPage'))
+const CreateEventPage = lazy(() => import('./pages/event/CreateEventPage'))
+const EventListPage = lazy(() => import('./pages/event/EventListPage'))
+const AddAlumniPage = lazy(() => import('./pages/user/AddAlumniPage'))
+const AlumniListPage = lazy(() => import('./pages/user/AlumniListPage'))
+const StudentListPage = lazy(() => import('./pages/user/StudentListPage'))
+const ChangePasswordPage = lazy(() => import('./pages/ChangePasswordPage'))
 import Dashboard from './pages/dashboard/Dashboard'
 import { Toaster } from 'react-hot-toast'
+const NewsListPage = lazy(() => import('./pages/news/NewsListPage'))
+const CreateNewsPage = lazy(() => import('./pages/news/CreateNewsPage'))
 
 function App() {
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2000);
+  }, []);
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Fragment>
       <BrowserRouter>
         <Routes>
-
           <Route path="/auth/signin" element={<SignIn />} />
           <Route path="/resetpass" element={<ResetPassword />} />
           <Route element={<DefaultLayout />} >
@@ -61,7 +68,23 @@ function App() {
                 </Suspense>
               }
             />
-              <Route
+            <Route
+              path="/news/newslist"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <NewsListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/news/newscreate"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <CreateNewsPage />
+                </Suspense>
+              }
+            />
+            <Route
               path="/users/addalumni"
               element={
                 <Suspense fallback={<Loader />}>
@@ -85,7 +108,7 @@ function App() {
                 </Suspense>
               }
             />
-             <Route
+            <Route
               path="/users/students"
               element={
                 <Suspense fallback={<Loader />}>
