@@ -1,6 +1,26 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { setselectedJob } from '../../redux/state/jobSlice';
+import { jobDetailsById } from '../../apiRequest/JobRequest';
 
 const JobInfoModel = ({setShowModal}) => {
+
+
+    let Jobdetails = useSelector((state) => (state.job.JobDetails));
+    let selectedJob = useSelector((state) => (state.job.selectedJob));
+
+   
+    useEffect(() => {
+        (async () => {
+            await jobDetailsById(setselectedJob);
+        })();
+    }, [selectedJob])
+
+
+
+
+    
     return (
         <Fragment>
             <div
@@ -25,63 +45,63 @@ const JobInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Title </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">React Developer</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.position}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Salary </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">40000-45000 BDT</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.salary} BDT</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Link to apply </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">www.enosislimited.com/apply</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.link}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Deadline Date</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">20th july, 2023</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{moment(Jobdetails?.deadlineDate).format("yyyy-MM-D")}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Job Type</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Fulltime</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.type}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Experience</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Entry</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.experience}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Location</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Kumira, Chattogram</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.location}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Company</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">ABC Limited</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.company}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Category</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">Onsite</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{Jobdetails?.category}</p>
                             </div>
                         </div>
                     </div>

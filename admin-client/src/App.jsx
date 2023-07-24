@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DefaultLayout from './layout/DefaultLayout'
 import "../src/assets/css/style.css"
 import Loader from './components/Loader'
-import SignIn from './pages/Authentication/SignIn'
-import ResetPassword from './pages/Authentication/ResetPassword'
+import Dashboard from './pages/dashboard/Dashboard'
+import { Toaster } from 'react-hot-toast'
+import SignInPage from './pages/Authentication/SignInPage'
+import ResetPasswordPage from './pages/Authentication/ResetPasswordPage'
+import ProfilePage from './pages/profile/ProfilePage'
 const CreateJobpage = lazy(() => import('./pages/job/CreateJobpage'))
 const JoblistPage = lazy(() => import('./pages/job/JoblistPage'))
 const CreateEventPage = lazy(() => import('./pages/event/CreateEventPage'))
@@ -13,8 +16,6 @@ const AddAlumniPage = lazy(() => import('./pages/user/AddAlumniPage'))
 const AlumniListPage = lazy(() => import('./pages/user/AlumniListPage'))
 const StudentListPage = lazy(() => import('./pages/user/StudentListPage'))
 const ChangePasswordPage = lazy(() => import('./pages/ChangePasswordPage'))
-import Dashboard from './pages/dashboard/Dashboard'
-import { Toaster } from 'react-hot-toast'
 const NewsListPage = lazy(() => import('./pages/news/NewsListPage'))
 const CreateNewsPage = lazy(() => import('./pages/news/CreateNewsPage'))
 
@@ -31,8 +32,8 @@ function App() {
     <Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/auth/signin" element={<SignIn />} />
-          <Route path="/resetpass" element={<ResetPassword />} />
+          <Route path="/auth/signin" element={<SignInPage/>} />
+          <Route path="/resetpass" element={<ResetPasswordPage />} />
           <Route element={<DefaultLayout />} >
             <Route index element={< Dashboard />} />
             <Route path='/calendar' element={< Loader />} />
@@ -121,6 +122,14 @@ function App() {
               element={
                 <Suspense fallback={<Loader />}>
                   <ChangePasswordPage />
+                </Suspense>
+              }
+            />
+             <Route
+              path="/profile"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <ProfilePage />
                 </Suspense>
               }
             />
