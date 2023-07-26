@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useSelector } from 'react-redux'
 import { newsListRequest } from '../../apiRequest/newsRequest'
@@ -9,15 +9,17 @@ import Loader from '../Loader'
 const NewsList = ({ setShowModal, setShowUpdateModal }) => {
     const news = useSelector((state) => state.news.newsList)
     const totalNews = useSelector((state) => state.news.Total)
-    const pageNo = useSelector((state) => state.news.pageNo)
+    // const pageNo = useSelector((state) => state.news.pageNo)
     const loading = useSelector((state) => state.news.loading)
+    const [pageNo, setPageNo] = useState(0)
 
     useEffect(() => {
-        newsListRequest(pageNo, 3, "")
+        newsListRequest(pageNo + 1, 3, "")
     }, [pageNo])
 
     const handlePageClick = async (e) => {
-        store.dispatch(setPageNo(e.selected + 1))
+        // store.dispatch(setPageNo(e.selected))
+        setPageNo(e.selected)
     };
 
     const onView = (id) => {

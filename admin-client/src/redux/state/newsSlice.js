@@ -4,7 +4,7 @@ export const newsSlice = createSlice({
     name: 'news',
     initialState:{
         loading:false,
-        pageNo: 1,
+        pageNo: 0,
         newsList: [],
         Total: 0,
         newsId:null,

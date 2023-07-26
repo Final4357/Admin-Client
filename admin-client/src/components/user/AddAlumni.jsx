@@ -117,7 +117,7 @@ const AddAlumni = () => {
                         <div className="flex flex-col lg:flex-row justify-between gap-4">
                             <div className="w-full lg:w-1/2">
                                 <label for="firstname" class="mb-3 block text-black dark:text-white">Firstname</label>
-                                <input type="text"  id="firstname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text"  id="firstname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     name="firstname"
                                     value={profileDetails?.firstname}
                                     // ref={(input) => (fnameRef = input)}
@@ -126,7 +126,7 @@ const AddAlumni = () => {
                             </div>
                             <div className="w-full lg:w-1/2">
                                 <label for="lname" class="mb-3 block text-black dark:text-white">Lastname</label>
-                                <input type="text" name="lastname" id="lastname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="lastname" id="lastname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.lastname}
                                     // ref={(input) => (lnameRef = input)}
                                     onChange={getProfileData}
@@ -140,7 +140,7 @@ const AddAlumni = () => {
                                     value={profileDetails?.email}
                                     // ref={(input) => (emailRef = input)}
                                     onChange={getProfileData}
-                                    class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" placeholder="name@company.com" required="" />
+                                    class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" placeholder="name@company.com" required="" />
                             </div>
                             <div className="w-full lg:w-1/2">
                                 <label for="studentId" class="mb-3 block text-black dark:text-white">Student ID</label>
@@ -148,7 +148,7 @@ const AddAlumni = () => {
                                     value={profileDetails?.studentId}
                                     // ref={(input) => (sidRef = input)}
                                     onChange={getProfileData}
-                                    class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                    class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     placeholder="e.g. C180000" required />
                             </div>
                         </div>
@@ -159,7 +159,7 @@ const AddAlumni = () => {
                         <div className="flex flex-col lg:flex-row justify-between gap-4">
                             <div className="w-full lg:w-1/2">
                                 <label for="position" class="mb-3 block text-black dark:text-white">Position</label>
-                                <input type="text" name="position" id="position" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="position" id="position" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.position}
                                     // ref={(input) => (positionRef = input)}
                                     onChange={getProfileData}
@@ -167,7 +167,7 @@ const AddAlumni = () => {
                             </div>
                             <div className="w-full lg:w-1/2">
                                 <label for="lname" class="mb-3 block text-black dark:text-white">Company Name</label>
-                                <input type="text" name="lname" id="lname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="lname" id="lname" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.company}
                                     // ref={(input) => (companyRef = input)}
                                     onChange={getProfileData}
@@ -206,7 +206,7 @@ const AddAlumni = () => {
                         <div className="flex flex-col lg:flex-row justify-between gap-4">
                             <div className="w-full lg:w-1/2">
                                 <label for="batch" class="mb-3 block text-black dark:text-white">Batch</label>
-                                <input type="text" name="batch" id="batch" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="batch" id="batch" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.batch}
                                     // ref={(input) => (batchRef = input)}
                                     onChange={getProfileData}
@@ -228,7 +228,7 @@ const AddAlumni = () => {
                         <div className="flex flex-col lg:flex-row justify-between gap-4">
                             <div className="w-full lg:w-1/2">
                                 <label for="phone" class="mb-3 block text-black dark:text-white">Contact No</label>
-                                <input type="text" name="phone" id="phone" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="phone" id="phone" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.phone}
                                     // ref={(input) => (phoneRef = input)}
                                     onChange={getProfileData}
@@ -236,7 +236,7 @@ const AddAlumni = () => {
                             </div>
                             <div className="w-full lg:w-1/2">
                                 <label for="address" class="mb-3 block text-black dark:text-white">Address</label>
-                                <input type="text" name="address" id="address" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                                <input type="text" name="address" id="address" class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     value={profileDetails?.address}
                                     // ref={(input) => (addressRef = input)}
                                     onChange={getProfileData}
