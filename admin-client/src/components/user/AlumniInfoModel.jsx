@@ -47,7 +47,7 @@ const AlumniInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Student ID</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails.studentId}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.studentId}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>

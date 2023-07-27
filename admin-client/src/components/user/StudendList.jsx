@@ -1,8 +1,36 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { store } from '../../redux/store/store'
+import Loader from '../Loader'
+import { studentListRequest } from '../../apiRequest/userRequest'
+import ReactPaginate from 'react-paginate'
 
-const StudendList = () => {
+const StudendList = (setShowModal) => {
+  const user = useSelector((state) => state.user.user)
+  const totalUser = useSelector((state) => state.user.totalUser)
+  const loading = useSelector((state) => state.user.loading)
+
+  const [pageNo, setPageNo] = useState(0);
+
+    useEffect(() => {
+      studentListRequest(pageNo+1, 5,"0")
+    }, [pageNo])
+
+    const handlePageClick = async (e) => {
+      setPageNo(e.selected)
+    };
+
+    const onView = (id) =>{
+      setShowModal(true);
+      store.dispatch(setID(id))
+    }
   return (
     <Fragment>
+    <>
+      {
+        loading ?
+          <Loader />
+          :
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
@@ -25,25 +53,27 @@ const StudendList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+          {
+                    user.map((item, i) =>
+                      <tr key={i} className='h-fit'>
               <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                 <div className="h-12.5 w-15 rounded-md">
-                  <img src="" alt="Alumni" />
+                  <img src={item.photo?.url}alt="Alumni" />
                 </div>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  +8801010101010
+                {item.firstname + " " + item.lastname}
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  +8801010101010
+                {item.email}
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                 <p className="text-black dark:text-white">
-                  C180000
+                {item.studentId}
                 </p>
               </td>
               <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -76,9 +106,35 @@ const StudendList = () => {
                   </button>
               </td>
             </tr>
+            )}
           </tbody>
         </table>
+        <div className='flex w-full justify-center py-8 '>
+                <nav aria-label="Page navigation example" style={{ display: 'flex', justifyContent: 'center' }}>
+                  <ReactPaginate className='pagination gap-2'
+                    previousLabel="<"
+                    nextLabel=">"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    pageCount={Math.ceil(totalUser / 5)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageClick}
+                    containerClassName="pagination"
+                    activeClassName="actives"
+                  />
+                </nav>
+              </div>
       </div>
+      }
+      </>
     </Fragment>
   )
 }
