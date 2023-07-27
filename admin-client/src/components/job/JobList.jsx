@@ -3,11 +3,11 @@ import moment from 'moment';
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ReactPaginate from 'react-paginate'
-import { setselectedJob } from '../../redux/state/jobSlice';
+import { setJobDetails, setselectedJob } from '../../redux/state/jobSlice';
 import { store } from '../../redux/store/store';
 import { cratedjobListRequest } from '../../apiRequest/JobRequest';
 
-const JobList = ({ setShowModal, setShowUpdateModal }) => {
+const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
 
     let Jobs = useSelector((state) => state.job.Jobs)
     let TotalJob = useSelector((state) => state.job.TotalJob)
@@ -19,6 +19,10 @@ const JobList = ({ setShowModal, setShowUpdateModal }) => {
         cratedjobListRequest(pageNo + 1, 5, "0")
     }, [pageNo])
 
+    if(!showUpdateModal){
+        store.dispatch(setJobDetails(null))
+
+    }
     const handlePageClick = async (e) => {
         setPageNo(e.selected)
     };
@@ -26,6 +30,14 @@ const JobList = ({ setShowModal, setShowUpdateModal }) => {
     const onUpdate = (id) => {
         store.dispatch(setselectedJob(id))
         setShowUpdateModal(true);
+
+       
+        
+      };
+
+      const OnView = (id) => {
+        store.dispatch(setselectedJob(id))
+        setShowModal(true);
        
         
       };
@@ -85,7 +97,7 @@ const JobList = ({ setShowModal, setShowUpdateModal }) => {
                                             </td>
                                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                 <div className="flex items-center space-x-3.5">
-                                                    <button onClick={() => setShowModal(true)} className="hover:text-primary">
+                                                    <button onClick={() => OnView(item._id)} className="hover:text-primary">
 
                                                         <svg
                                                             className="fill-current"

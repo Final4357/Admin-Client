@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { setselectedJob } from '../../redux/state/jobSlice';
 import { jobDetailsById } from '../../apiRequest/JobRequest';
 
 const JobInfoModel = ({setShowModal}) => {
@@ -13,7 +12,7 @@ const JobInfoModel = ({setShowModal}) => {
    
     useEffect(() => {
         (async () => {
-            await jobDetailsById(setselectedJob);
+            await jobDetailsById(selectedJob);
         })();
     }, [selectedJob])
 

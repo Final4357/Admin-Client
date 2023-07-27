@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const jobSlice = createSlice({
     name: 'job',
     initialState: {
-        JobDetails:"",
+        JobDetails:null,
         pageNo: 1,
         perPage: 6,
         searchKey: "",

@@ -1,6 +1,59 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useRef } from 'react'
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { jobDetailsById, updateJobdetails } from '../../apiRequest/JobRequest';
+import { ErrorToast, IsEmpty } from '../../helper/formHelper';
 
 const UpdateModel = ({ setShowUpdateModal }) => {
+
+
+    let titleRef, salaryRef, linktoRef, jobtypeRef, locaitonRef, experienceRef, companyRef, dateRef, categoryRef = useRef();
+    let navigate = useNavigate();
+    let Jobdetails = useSelector((state) => (state.job.JobDetails));
+    let selectedJob = useSelector((state) => (state.job.selectedJob));
+
+    useEffect(() => {
+        (async () => {
+            await jobDetailsById(selectedJob);
+        })();
+    }, [selectedJob])
+
+    const onjobUpdate = () => {
+        let title = titleRef.value;
+        let salary = salaryRef.value;
+        let linkto = linktoRef.value;
+        let date = dateRef.value
+        let jobtype = jobtypeRef.value;
+        let location = locaitonRef.value;
+        let experience = experienceRef.value;
+        let company = companyRef.value;
+        let category = categoryRef.value;
+
+        if (IsEmpty(title)) {
+            ErrorToast("Title Required !");
+        } else if (IsEmpty(salary)) {
+            ErrorToast("Salary Required !");
+        } else if (IsEmpty(linkto)) {
+            ErrorToast("Link to Apply Required !");
+        } else if (IsEmpty(date)) {
+            ErrorToast("Deadline Date Required !");
+        } else if (IsEmpty(jobtype)) {
+            ErrorToast("Job type is  Required !");
+        } else if (IsEmpty(location)) {
+            ErrorToast("Location is Required !");
+        } else if (IsEmpty(experience)) {
+            ErrorToast("Location is Required !");
+        }else if (IsEmpty(company)) {
+            ErrorToast("Company Required !");
+        } else if (IsEmpty(category)) {
+            ErrorToast("Company website is  Required !");
+        } else {
+            if (updateJobdetails(Jobdetails._id, title, salary, linkto, date, jobtype, location,  company, experience, category)) {
+                setShowUpdateModal(false);
+            } else navigate("/job/joblist");
+        }
+    };
     return (
         <Fragment>
             <div
@@ -29,13 +82,14 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Title
                                     </label>
                                     <input
-                                        //  ref={(input) => (titleRef = input)}
+                                         ref={(input) => (titleRef = input)}
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         type="text"
                                         id="job-title"
                                         name="job-title"
                                         placeholder="Frontend Developer"
                                         autofocus
+                                        defaultValue={Jobdetails?.position}
                                     />
                                 </div>
 
@@ -47,12 +101,13 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Salary
                                     </label>
                                     <input
-                                        //  ref={(input) => (salaryRef = input)}
+                                        ref={(input) => (salaryRef = input)}
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         type="texy"
                                         id="apply-link"
                                         name="apply-link"
                                         placeholder="35000-50000"
+                                        defaultValue={Jobdetails?.salary}
                                     />
                                 </div>
                             </div>
@@ -62,12 +117,13 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Company
                                     </label>
                                     <input
-                                        //   ref={(input) => (companyRef = input)}
+                                          ref={(input) => (companyRef = input)}
                                         type="text"
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         id="company"
                                         name="company"
                                         placeholder="ABC LTD."
+                                        defaultValue={Jobdetails?.company}
                                     />
                                 </div>
 
@@ -84,11 +140,12 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                             id="job-type"
                                             name="job-type"
 
-                                        // ref={(input) => (categoryRef = input)}
-                                        >
-                                            <option value="Onsite">Onsite</option>
-                                            <option value="Remote">Remote</option>
-                                            <option value="Hybrid">Hybrid</option>
+                                            ref={(input) => (categoryRef = input)}
+                                            >
+                                                <option disabled selected> Chose Category Type</option>
+                                                <option value="Onsite" selected={Jobdetails?.category === "Onsite"}>Onsite</option>
+                                                <option value="Remote" selected={Jobdetails?.category === "Remote"}>Remote</option>
+                                                <option value="Hybrid" selected={Jobdetails?.category === "Hybrid"}>Hybrid</option>
                                         </select>
 
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -118,13 +175,14 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                             id="job-type"
                                             name="job-type"
 
-                                        // ref={(input) => (jobtypeRef = input)}
-                                        >
-                                            <option value="Fulltime">Full time</option>
-                                            <option value="Parttime">Part time</option>
-                                            <option value="Internship">Internship</option>
-                                            <option value="Contractual">Contractual</option>
-                                            <option value="Freelance">Freelance</option>
+                                            ref={(input) => (jobtypeRef = input)}
+                                            >
+                                                <option disabled selected> Chose Job Type</option>
+                                                <option value="Fulltime" selected={Jobdetails?.type === "Fulltime"} >Full time</option>
+                                                <option value="Parttime" selected={Jobdetails?.type === "Parttime"}>Part time</option>
+                                                <option value="Internship" selected={Jobdetails?.type === "Internship"}>Internship</option>
+                                                <option value="Contractual" selected={Jobdetails?.type === "Contractual"}>Contractual</option>
+                                                <option value="Freelance" selected={Jobdetails?.type === "Freelance"}>Freelance</option>
                                         </select>
 
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -146,11 +204,13 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Experience
                                     </label>
                                     <div class="relative">
-                                        <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
-                                            <option selected disabled value="">Select Experience</option>
-                                            <option value="Entry">Entry (0-2 Years)</option>
-                                            <option value="Intermediate">Intermediate (3-5 Years)</option>
-                                            <option value="Expert">Expert (5 or Higher)</option>
+                                        <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                                        ref={(input) => (experienceRef = input)}
+                                        >
+                                            <option disabled selected> Chose Experience Type</option>
+                                            <option value="Entry" selected={Jobdetails?.experience === "Entry"}>Entry (0-2 Years)</option>
+                                            <option value="Intermediate" selected={Jobdetails?.experience === "Intermediate"}>Intermediate (3-5 Years)</option>
+                                            <option value="Expert" selected={Jobdetails?.experience === "Expert"}>Expert (5 or Higher)</option>
                                         </select>
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                             <svg
@@ -173,12 +233,13 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Link to apply
                                     </label>
                                     <input
-                                        //  ref={(input) => (linktoRef = input)}
+                                          ref={(input) => (linktoRef = input)}
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         type="text"
                                         id="apply-link"
                                         name="apply-link"
                                         placeholder="https://www.djangoproject.com/apply"
+                                        defaultValue={Jobdetails?.link}
                                     />
                                 </div>
                                 <div class=" w-full">
@@ -189,12 +250,13 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Deadline Date
                                     </label>
                                     <input
-                                        //   ref={(input) => (dateRef = input)}
+                                           ref={(input) => (dateRef = input)}
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         type="date"
                                         id="apply-link"
                                         name="apply-link"
                                         placeholder="https://www.djangoproject.com/apply"
+                                        defaultValue={moment(Jobdetails?.deadlineDate).format("yyyy-MM-D")}
                                     />
                                 </div>
                             </div>
@@ -204,16 +266,17 @@ const UpdateModel = ({ setShowUpdateModal }) => {
                                         Location
                                     </label>
                                     <input
-                                        //   ref={(input) => (locaitonRef = input)}
+                                          ref={(input) => (locaitonRef = input)}
                                         type="text"
                                         class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                         id="location"
                                         name="location"
                                         placeholder="Kumira, Chattogram"
+                                        defaultValue={Jobdetails?.location}
                                     />
                                 </div>
                             </div>
-                            <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                            <button  onClick={onjobUpdate} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
                                 Save
                             </button>
                         </div>

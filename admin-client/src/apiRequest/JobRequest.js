@@ -92,7 +92,6 @@ export const jobDetailsById = async (id) => {
         const result = await axios.get(url);
         if (result.status === 200) {
 
-            console.log(result.data)
             if (result.data.data.length > 0) {
                 store.dispatch(setJobDetails(result.data.data[0]))
 
@@ -115,15 +114,14 @@ export const updateJobdetails = (id, title,
     date,
     jobtype,
     locaiton,
-    description,
     company,
     experience,
     category) => {
 
-    let PostBody = { position: title, company: company, location: locaiton, salary: salary, experience: experience, category: category, link: linkto, deadlineDate: new Date(date), type: jobtype, details: description }
+    let PostBody = { position: title, company: company, location: locaiton, salary: salary, experience: experience, category: category, link: linkto, deadlineDate: new Date(date), type: jobtype}
     let URL = BaseURL + "/" + id;
     return axios.put(URL, PostBody, AxiosHeader).then((res) => {
-        console.log(res);
+       
 
         if (res.status === 200) {
             SuccessToast("Job Details Updated")
