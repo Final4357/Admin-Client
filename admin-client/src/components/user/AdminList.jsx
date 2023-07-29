@@ -56,9 +56,7 @@ const AdminList = ({ setShowModal }) => {
                     <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                       Email
                     </th>
-                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
-                      Student ID
-                    </th>
+                    
                     <th className="py-4 px-4 font-medium text-black dark:text-white">
                       Actions
                     </th>
@@ -83,11 +81,7 @@ const AdminList = ({ setShowModal }) => {
                             {item.email}
                           </p>
                         </td>
-                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                          <p className="text-black dark:text-white">
-                            {item.studentId}
-                          </p>
-                        </td>
+                        
                         <td className="h-fit border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <div className="flex items-center space-x-3.5">
                             <button onClick={() => onView(item._id)} className="hover:text-primary">
