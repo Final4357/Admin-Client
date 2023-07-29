@@ -60,7 +60,7 @@ export const studentListRequest = async (pageNo, perPage, searchKey) => {
 export const adminListRequest = async (pageNo, perPage, searchKey) => {
     try {
         store.dispatch(setLoading(true))
-        let url = BaseURL + `/studentList?pageNo=${pageNo}&perPage=${perPage}&searchKey=${searchKey}`;
+        let url = BaseURL + `/adminList?pageNo=${pageNo}&perPage=${perPage}&searchKey=${searchKey}`;
         const result = await axios.get(url,AxiosHeader);
         store.dispatch(setLoading(false))
         
