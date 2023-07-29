@@ -9,7 +9,7 @@ const AddAlumniPage = () => {
 
     return (
         <Fragment>
-            <Breadcrumb pageName="Alumni" />
+            <Breadcrumb pageName="Add Alumni" />
             <main class="main bg-white px-2 md:py-6 rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
                 <AddAlumni />
             </main>

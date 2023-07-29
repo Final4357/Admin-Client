@@ -3,15 +3,15 @@ import { store } from "../redux/store/store";
 import { ErrorToast, SuccessToast } from "../helper/formHelper";
 import { setLoading, setNews, setNewsDetails, setNewsTotal } from "../redux/state/newsSlice";
 // import { ErrorToast } from "../helper/formHelper.js";
-// import { getToken } from "../helper/sessionHelper.js";
+ import { getToken } from "../helper/sessionHelper.js";
 const BaseURL = "http://localhost:8081/api/news"
 //  const BaseURL = "https://iiuc-alumni.onrender.com/api/news"
-// const AxiosHeader = { headers: { "token": getToken() } }
+ const AxiosHeader = { headers: { "token": getToken() } }
 
 export const newsDetailsById = async (id) => {
     try {
         let url = BaseURL + "/details/" + id;
-        const result = await axios.get(url);
+        const result = await axios.get(url,AxiosHeader);
         if (result.status === 200) {
             if (result.data.data.length > 0) {
                 
@@ -30,7 +30,7 @@ export const newsDetailsById = async (id) => {
 
 export const updateNews = (formData, id) =>{
     let URL = BaseURL + "/"+id;
-    return axios.put(URL, formData).then((res) => {
+    return axios.put(URL, formData,AxiosHeader).then((res) => {
         if (res.status === 200) {
             SuccessToast("Alumni Details Updated")
             return true;

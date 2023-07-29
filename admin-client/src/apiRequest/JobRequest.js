@@ -13,13 +13,12 @@ export const Jobcreaterequest = (title,
     date,
     jobtype,
     locaiton,
-    description,
     company,
     experience,
     category) => {
 
     let URL = BaseURL + "/";
-    let PostBody = { position: title, company: company, location: locaiton, salary: salary, experience: experience, category: category, link: linkto, deadlineDate: new Date(date), type: jobtype, details: description }
+    let PostBody = { position: title, company: company, location: locaiton, salary: salary, experience: experience, category: category, link: linkto, deadlineDate: new Date(date), type: jobtype }
     return axios.post(URL, PostBody, AxiosHeader).then((res) => {
 
         if (res.status === 200) {

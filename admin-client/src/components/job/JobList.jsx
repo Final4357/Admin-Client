@@ -5,19 +5,18 @@ import { Link } from 'react-router-dom'
 import ReactPaginate from 'react-paginate'
 import { setJobDetails, setselectedJob } from '../../redux/state/jobSlice';
 import { store } from '../../redux/store/store';
-import { cratedjobListRequest } from '../../apiRequest/JobRequest';
+import { cratedjobListRequest, deleteJobById } from '../../apiRequest/JobRequest';
 
 const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
 
     let Jobs = useSelector((state) => state.job.Jobs)
+    const [update, setUpdate] = useState(false);
     let TotalJob = useSelector((state) => state.job.TotalJob)
     const loading = useSelector((state) => state.job.loading)
 
     const [pageNo, setPageNo] = useState(0);
 
-    useEffect(() => {
-        cratedjobListRequest(pageNo + 1, 5, "0")
-    }, [pageNo])
+  
 
     if(!showUpdateModal){
         store.dispatch(setJobDetails(null))
@@ -35,12 +34,22 @@ const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
         
       };
 
+      const onDelete = async (id) => {
+        await deleteJobById(id);
+        setUpdate(true);
+    
+      };
+
       const OnView = (id) => {
         store.dispatch(setselectedJob(id))
         setShowModal(true);
        
         
       };
+      useEffect(() => {
+        cratedjobListRequest(pageNo + 1, 5, "0")
+        setUpdate(false);
+    }, [pageNo,update])
 
 
 
@@ -119,7 +128,7 @@ const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
                                                     </button>
                                                     {/* {showModal && mainModal} */}
 
-                                                    <button>
+                                                    <button onClick={() => onDelete(item._id)}>
                                                         <svg
                                                             className="fill-current"
                                                             width="18"
