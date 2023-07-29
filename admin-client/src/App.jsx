@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast'
 import SignInPage from './pages/Authentication/SignInPage'
 import ResetPasswordPage from './pages/Authentication/ResetPasswordPage'
 import ProfilePage from './pages/profile/ProfilePage'
+import AdminlistPage from './pages/user/AdminlistPage'
 const CreateJobpage = lazy(() => import('./pages/job/CreateJobpage'))
 const JoblistPage = lazy(() => import('./pages/job/JoblistPage'))
 const CreateEventPage = lazy(() => import('./pages/event/CreateEventPage'))
@@ -106,6 +107,14 @@ function App() {
               element={
                 <Suspense fallback={<Loader />}>
                   <AlumniListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/users/admin"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <AdminlistPage />
                 </Suspense>
               }
             />
