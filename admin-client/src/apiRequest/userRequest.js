@@ -38,7 +38,7 @@ export const studentListRequest = async (pageNo, perPage, searchKey) => {
         let url = BaseURL + `/studentList?pageNo=${pageNo}&perPage=${perPage}&searchKey=${searchKey}`;
         const result = await axios.get(url,AxiosHeader);
         store.dispatch(setLoading(false))
-        console.log(result.data)
+        
         if (result.status === 200) {
             if (result.data.data[0].Row.length > 0) {
                 store.dispatch(setUser(result.data.data[0].Row))
@@ -76,11 +76,54 @@ export const alumniDetailsById = async (id) => {
         ErrorToast("Something went wrong.")
     }
 }
+export const studentDetailsById = async (id) => {
+    try {
+        let url = BaseURL + "/details/" + id;
+        const result = await axios.get(url,AxiosHeader);
+        
+        if (result.status === 200) {
+            if (result.data.data.length > 0) {
+                store.dispatch(setDetails(result.data.data[0]))
+
+            } else {
+                store.dispatch(setDetails(""))
+                ErrorToast("No data found.")
+            }
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+        ErrorToast("Something went wrong.")
+    }
+}
+export const adminDetailsById = async (id) => {
+    try {
+        let url = BaseURL + "/details/" + id;
+        const result = await axios.get(url,AxiosHeader);
+        
+        if (result.status === 200) {
+            if (result.data.data.length > 0) {
+                store.dispatch(setDetails(result.data.data[0]))
+
+            } else {
+                store.dispatch(setDetails(""))
+                ErrorToast("No data found.")
+            }
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+        ErrorToast("Something went wrong.")
+    }
+}
+
+
+
 
 export const updateAlumni = (formData, id) =>{
     console.log(formData)
     let URL = BaseURL + "/"+id;
-    return axios.put(URL, formData).then((res) => {
+    return axios.put(URL, formData,AxiosHeader).then((res) => {
         if (res.status === 200) {
             SuccessToast("Alumni Details Updated")
             return true;
@@ -100,4 +143,53 @@ export const updateAlumni = (formData, id) =>{
             return false;
         }
     })
+}
+
+export const deleteUserById = async (id) => {
+    try {
+        let url = BaseURL + "/" + id;
+        const result = await axios.delete(url, AxiosHeader);
+        if (result.status === 200) {
+            debugger
+            SuccessToast("User Deleted! ")
+
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+
+        ErrorToast("Something went wrong.")
+    }
+}
+
+export const deleteAlumniById = async (id) => {
+    try {
+        let url = BaseURL + "/" + id;
+        const result = await axios.delete(url, AxiosHeader);
+        if (result.status === 200) {
+            SuccessToast("ALumni Deleted! ")
+
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+
+        ErrorToast("Something went wrong.")
+    }
+}
+
+export const deleteAdminById = async (id) => {
+    try {
+        let url = BaseURL + "/" + id;
+        const result = await axios.delete(url, AxiosHeader);
+        if (result.status === 200) {
+            SuccessToast("Admin Deleted! ")
+
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+
+        ErrorToast("Something went wrong.")
+    }
 }

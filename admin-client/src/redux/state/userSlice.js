@@ -5,8 +5,10 @@ export const userSlice = createSlice({
     initialState: {
     alumni: [],
     user: [],
+    admin:[],
     totalAlumni: 0,
     totalUser: 0,
+    totalAdmin: 0,
     id: null,
     profileDetails: null,
     students: [],
@@ -19,10 +21,16 @@ export const userSlice = createSlice({
     setUser: (state, action)=>{
         state.user = action.payload
     },
+    setAdmin: (state, action)=>{
+        state.admin = action.payload
+    },
     setAlumniTotal: (state, action)=>{
         state.totalAlumni = action.payload
     },
     setUserTotal: (state, action)=>{
+        state.totalUser = action.payload
+    },
+    setAlumniTotal: (state, action)=>{
         state.totalUser = action.payload
     },
     setDetails:(state, action)=>{

@@ -4,19 +4,25 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Loader from '../Loader'
 import { store } from '../../redux/store/store'
-import { alumniListRequest } from '../../apiRequest/userRequest'
+import { alumniListRequest, deleteAlumniById } from '../../apiRequest/userRequest'
 import { setID } from '../../redux/state/userSlice'
 
 const AlumniList = ({ setShowModal }) => {
+
+  const [update, setUpdate] = useState(false);
   const alumni = useSelector((state) => state.user.alumni)
   const totalAlumni = useSelector((state) => state.user.totalAlumni)
   const loading = useSelector((state) => state.user.loading)
 
   const [pageNo, setPageNo] = useState(0);
 
-    useEffect(() => {
-        alumniListRequest(pageNo+1, 5,"0")
-    }, [pageNo])
+  const onDelete = async (id) => {
+    await deleteAlumniById(id);
+    setUpdate(true);
+
+  };
+
+    
 
     const handlePageClick = async (e) => {
       setPageNo(e.selected)
@@ -26,6 +32,11 @@ const AlumniList = ({ setShowModal }) => {
       setShowModal(true);
       store.dispatch(setID(id))
     }
+
+    useEffect(() => {
+      alumniListRequest(pageNo+1, 5,"0")
+      setUpdate(false);
+    }, [pageNo, update])
 
   return (
     <Fragment>
@@ -112,7 +123,7 @@ const AlumniList = ({ setShowModal }) => {
                             </button>
                             {/* {showModal && mainModal} */}
 
-                            <button>
+                            <button onClick={() => onDelete(item._id)}>
                               <svg
                                 className="fill-current"
                                 width="18"
