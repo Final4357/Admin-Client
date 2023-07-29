@@ -70,6 +70,14 @@ function App() {
               }
             />
             <Route
+              path="/event/eventupdate/:id"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <CreateEventPage />
+                </Suspense>
+              }
+            />
+            <Route
               path="/news/newslist"
               element={
                 <Suspense fallback={<Loader />}>

@@ -1,12 +1,102 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import Checkbox from '../Checkbox'
+import JoditEditor from 'jodit-react';
+import { ErrorToast, IsEmpty } from '../../helper/formHelper';
+import { useNavigate, useParams } from 'react-router-dom';
+import { eventCreateRequest } from '../../apiRequest/eventRequest';
 
 const CreateEvent = () => {
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+    const [checked, setChecked] = useState([])
+    const openFor = ["Alumni", "Student", "Member", "Staff", "Faculty"]
+    let titleRef, topicRef, venueRef, linkRef, dateRef, startTimeRef, endTimeRef, eventWebsiteRef= useRef()
+    const navigate = useNavigate()
+    let params = useParams()
+
+    const handleCheck = (event) => {
+        var updatedList = [...checked];
+        if (event.target.checked) {
+            updatedList = [...checked, event.target.value];
+        } else {
+            updatedList.splice(checked.indexOf(event.target.value), 1);
+        }
+        setChecked(updatedList);
+    };
+
+    const onSave = async () => {
+        if (IsEmpty(titleRef.value)) {
+            ErrorToast("Title required!");
+        } else if (IsEmpty(topicRef.value)) {
+            ErrorToast("Topic required!");
+        } else if (IsEmpty(venueRef.value)) {
+            ErrorToast("Venue required!");
+        } else if (IsEmpty(dateRef.value)) {
+            ErrorToast("Date required!");
+        } else if (IsEmpty(startTimeRef.value)) {
+            ErrorToast("Start Time required!");
+        } else if (IsEmpty(endTimeRef.value)) {
+            ErrorToast("End Time required!");
+        } else if (IsEmpty(eventWebsiteRef.value)) {
+            ErrorToast("Event Website Link required!");
+        } else {
+            const data = {
+                title: titleRef.value,
+                topic: topicRef.value,
+                venue: venueRef.value,
+                date: new Date(dateRef.value),
+                startTime: startTimeRef.value,
+                endTime: endTimeRef.value,
+                openTo: checked,
+                link: linkRef.value,
+                ventWebsite: eventWebsiteRef.value,
+                desc: content
+            }
+            const result = await eventCreateRequest(data)
+            if(result) navigate('/event/eventlist')
+        }
+    }
+
+    const onUpdate = async () => {
+        if (IsEmpty(titleRef.value)) {
+            ErrorToast("Title required!");
+        } else if (IsEmpty(topicRef.value)) {
+            ErrorToast("Topic required!");
+        } else if (IsEmpty(venueRef.value)) {
+            ErrorToast("Venue required!");
+        } else if (IsEmpty(dateRef.value)) {
+            ErrorToast("Date required!");
+        } else if (IsEmpty(startTimeRef.value)) {
+            ErrorToast("Start Time required!");
+        } else if (IsEmpty(endTimeRef.value)) {
+            ErrorToast("End Time required!");
+        } else if (IsEmpty(eventWebsiteRef.value)) {
+            ErrorToast("Event Website Link required!");
+        } else {
+            const data = {
+                title: titleRef.value,
+                topic: topicRef.value,
+                venue: venueRef.value,
+                date: new Date(dateRef.value),
+                startTime: startTimeRef.value,
+                endTime: endTimeRef.value,
+                openTo: checked,
+                link: linkRef.value,
+                ventWebsite: eventWebsiteRef.value,
+                desc: content
+            }
+            const result = await updateEvent(data, params.id)
+            if(result) navigate('/event/eventlist')
+        }
+    }
+
     return (
         <Fragment>
             <div class="w-full max-w-xl mx-auto">
                 <div className='space-y-4'>
-                    <h1 class="text-xl font-semibold text-black dark:text-white">Create New Event</h1>
+                    <h1 class="text-xl font-semibold text-black dark:text-white">
+                    {params.id ? "Update Event" : "Create New Event"}
+                    </h1>
 
                     <div class="space-y-4">
                         <div className="flex justify-between gap-4 ">
@@ -18,7 +108,7 @@ const CreateEvent = () => {
                                     Title
                                 </label>
                                 <input
-                                    //  ref={(input) => (titleRef = input)}
+                                    ref={(input) => (titleRef = input)}
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     type="text"
                                     id="Event-title"
@@ -37,7 +127,7 @@ const CreateEvent = () => {
                                     Topic
                                 </label>
                                 <input
-                                    //  ref={(input) => (titleRef = input)}
+                                    ref={(input) => (topicRef = input)}
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     type="text"
                                     id="Event-topic"
@@ -56,7 +146,7 @@ const CreateEvent = () => {
                                     Venue
                                 </label>
                                 <input
-                                    //  ref={(input) => (titleRef = input)}
+                                    ref={(input) => (venueRef = input)}
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     type="text"
                                     id="Event-venue"
@@ -66,7 +156,6 @@ const CreateEvent = () => {
                                 />
                             </div>
                         </div>
-
                         <div className="flex justify-between gap-4 ">
                             <div class=" w-full">
                                 <label
@@ -76,7 +165,7 @@ const CreateEvent = () => {
                                     Link (optional)
                                 </label>
                                 <input
-                                    //  ref={(input) => (linktoRef = input)}
+                                    ref={(input) => (linkRef = input)}
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     type="text"
                                     id="apply-link"
@@ -92,7 +181,7 @@ const CreateEvent = () => {
                                     Date
                                 </label>
                                 <input
-                                    //   ref={(input) => (dateRef = input)}
+                                    ref={(input) => (dateRef = input)}
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     type="date"
                                     id="event-date"
@@ -106,7 +195,7 @@ const CreateEvent = () => {
                                     Starting Time
                                 </label>
                                 <input
-                                    //   ref={(input) => (companyRef = input)}
+                                    ref={(input) => (startTimeRef = input)}
                                     type="time"
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     id="company"
@@ -119,7 +208,7 @@ const CreateEvent = () => {
                                     Ending Time
                                 </label>
                                 <input
-                                    //   ref={(input) => (companyRef = input)}
+                                    ref={(input) => (endTimeRef = input)}
                                     type="time"
                                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                     id="company"
@@ -137,7 +226,7 @@ const CreateEvent = () => {
                                 Event website
                             </label>
                             <input
-                                //  ref={(input) => (linktoRef = input)}
+                                ref={(input) => (eventWebsiteRef = input)}
                                 class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                 type="text"
                                 id="apply-link"
@@ -153,28 +242,11 @@ const CreateEvent = () => {
                                 Open for
                             </label>
                             <div class="flex items-center gap-3 flex-wrap">
-                                <Checkbox id={"Alumni"} CText={"Alumni"} />
-                                <Checkbox id={"Students"} CText={"Students"} />
-                                <Checkbox id={"Members"} CText={"Members"} />
-                                <Checkbox id={"Staff"} CText={"Staff"} />
-                                <Checkbox id={"Faculty"} CText={"Faculty"} />
-                                {/* <div className='flex justify-between'>
-                                        <input
-                                            // onChange={(e) => { store.dispatch(setSelectType(e.target.value)) }}
-                                            // checked={selectType.includes("Fulltime")}
-                                            id="gaming"
-                                            type="checkbox"
-                                            value="Fulltime"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            for="gaming"
-                                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-
-                                        >
-                                            Students
-                                        </label>
-                                    </div> */}
+                                {
+                                    openFor.map((item, i) =>
+                                        <Checkbox key={i} handleCheck={handleCheck} label={item} />
+                                    )
+                                }
                             </div>
                         </div>
                         <div>
@@ -184,16 +256,17 @@ const CreateEvent = () => {
                             >
                                 Description
                             </label>
-                            <textarea
-                                //  ref={(input) => (descriptionRef = input)}
-                                id="desc"
-                                rows="4"
-                                class="w-full resize-none rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                                placeholder="Write your thoughts here..."
-                            ></textarea>
+                            <JoditEditor
+                                ref={editor}
+                                value={content}
+                                // config={config} 
+                                tabIndex={1}
+                                onBlur={newContent => setContent(newContent)}
+                                onChange={newContent => setContent(newContent)}
+                            />
                         </div>
-                        <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                            Create
+                        <button onClick={ params.id ? onUpdate : onSave} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                             {params.id ? "Save" : "Create"}
                         </button>
                     </div>
                 </div>

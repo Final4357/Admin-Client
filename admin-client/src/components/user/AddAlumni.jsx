@@ -71,7 +71,6 @@ const AddAlumni = () => {
 
       const onUpdate = () => {
         if (validation()) {
-            console.log("jo")
             const formData = new FormData()
             formData.append('firstName', fnameRef.value)
             formData.append('lastName', lnameRef.value)

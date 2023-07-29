@@ -1,22 +1,29 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 
-const Checkbox = ({id, CText}) => {
+const Checkbox = ({label, handleCheck}) => {//{refer,name,id, CText}
 const [isChecked, setIsChecked] = useState(false);
-
+const onHandle = (e) =>{
+  setIsChecked(!isChecked)
+  handleCheck(e)
+}
+  
   return (
     <Fragment>
       <label
-        htmlFor={id}
+        // htmlFor={id}
         className="flex cursor-pointer select-none items-center"
       >
         <div className="relative">
           <input
+          //  ref={refer}
             type="checkbox"
-            id={id}
+            // id={id}
+            value={label}
+            // checked={checked}
+            // name={name}
             className="sr-only"
-            onChange={() => {
-              setIsChecked(!isChecked);
-            }}
+            // onChange={() =>setIsChecked(!isChecked)}
+            onChange={(e)=>onHandle(e)}
           />
           <div
             className={`mr-2 flex h-5 w-5 items-center justify-center rounded border ${
@@ -28,7 +35,7 @@ const [isChecked, setIsChecked] = useState(false);
             ></span>
           </div>
         </div>
-        {CText}
+        {label}
       </label>
     </Fragment>
   )

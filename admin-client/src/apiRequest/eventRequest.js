@@ -2,11 +2,31 @@ import axios from "axios";
 import { store } from "../redux/store/store";
 import { ErrorToast, SuccessToast } from "../helper/formHelper";
 import { setEvent, setEventDetails, setEventTotal, setLoading } from "../redux/state/eventSlice";
-// import { ErrorToast } from "../helper/formHelper.js";
-// import { getToken } from "../helper/sessionHelper.js";
+import { getToken } from "../helper/sessionHelper.js";
 const BaseURL = "http://localhost:8081/api/event"
 //  const BaseURL = "https://iiuc-alumni.onrender.com/api/event"
-// const AxiosHeader = { headers: { "token": getToken() } }
+const AxiosHeader = { headers: { "token": getToken() } }
+
+export const eventCreateRequest = (formData) => {
+    let URL = BaseURL + "/";
+    return axios.post(URL, formData, AxiosHeader).then((res) => {
+        if (res.status === 200) {
+            SuccessToast("Event has been Created")
+            return true;
+        } else {
+            ErrorToast("Something Went Wrong")
+            return false;
+        }
+    }).catch((err) => {
+        if (err.response.data.status === 404) {
+            ErrorToast(err.response.data.message)
+            return false;
+        } else {
+            ErrorToast("Something Went Wrong")
+            return false;
+        }
+    })
+}
 
 export const eventDetailsById = async (id) => {
     try {

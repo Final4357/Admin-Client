@@ -1,9 +1,8 @@
 import React, { useRef } from 'react'
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useState } from 'react'
 import { Fragment } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { IsEmail, IsPassword } from '../../helper/formHelper';
+import { Link } from 'react-router-dom';
+import { ErrorToast, IsEmail, IsPassword } from '../../helper/formHelper';
 import { LoginRequest } from '../../apiRequest/authRequest';
 
 const Signin = () => {
@@ -11,7 +10,6 @@ const Signin = () => {
 
     const [show, setShow] = useState(false)
   let emailRef, passwordRef = useRef()
-  let navigate = useNavigate();
 
   const onLogin = () => {
     let email = emailRef.value;
@@ -26,7 +24,6 @@ const Signin = () => {
     else {
         LoginRequest(email, password).then((result) => {
         if (result) window.location.href = "/"
-        else navigate('/Login')
       })
     }
   }
