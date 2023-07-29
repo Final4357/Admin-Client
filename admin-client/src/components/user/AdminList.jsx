@@ -2,14 +2,14 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { store } from '../../redux/store/store'
 import Loader from '../Loader'
-import { deleteAdminById, deleteUserById, studentListRequest } from '../../apiRequest/userRequest'
+import { adminListRequest, deleteAdminById, deleteUserById, studentListRequest } from '../../apiRequest/userRequest'
 import ReactPaginate from 'react-paginate'
 import { setID } from '../../redux/state/userSlice'
 
 const AdminList = ({ setShowModal }) => {
   const [update, setUpdate] = useState(false);
   const [pageNo, setPageNo] = useState(0);
-  const user = useSelector((state) => state.user.admin)
+  const admin = useSelector((state) => state.user.admin)
   const totaladmin = useSelector((state) => state.user.totalAdmin)
   const loading = useSelector((state) => state.user.loading)
 
@@ -31,7 +31,7 @@ const AdminList = ({ setShowModal }) => {
   }
 
   useEffect(() => {
-    studentListRequest(pageNo + 1, 5, "0")
+    adminListRequest(pageNo + 1, 5, "0")
     setUpdate(false);
   }, [pageNo, update])
 
@@ -66,7 +66,7 @@ const AdminList = ({ setShowModal }) => {
                 </thead>
                 <tbody>
                   {
-                    user.map((item, i) =>
+                    admin.map((item, i) =>
                       <tr key={i} className='h-fit'>
                         <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                           <div className="h-12.5 w-15 rounded-md">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../redux/store/store";
-import { setAlumni, setAlumniTotal, setDetails, setLoading, setUser, setUserTotal } from "../redux/state/userSlice";
-import { ErrorToast } from "../helper/formHelper";
+import { setAdmin, setAdminTotal, setAlumni, setAlumniTotal, setDetails, setLoading, setUser, setUserTotal } from "../redux/state/userSlice";
+import { ErrorToast, SuccessToast } from "../helper/formHelper";
 
 import { getToken } from "../helper/sessionHelper.js";
 const BaseURL = "http://localhost:8081/api/user"
@@ -46,6 +46,31 @@ export const studentListRequest = async (pageNo, perPage, searchKey) => {
             } else {
                 store.dispatch(setUser([]))
                 store.dispatch(setUserTotal(0))
+                ErrorToast("No data found.")
+            }
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+        store.dispatch(setLoading(false))
+        ErrorToast("Something went wrong.")
+    }
+}
+
+export const adminListRequest = async (pageNo, perPage, searchKey) => {
+    try {
+        store.dispatch(setLoading(true))
+        let url = BaseURL + `/studentList?pageNo=${pageNo}&perPage=${perPage}&searchKey=${searchKey}`;
+        const result = await axios.get(url,AxiosHeader);
+        store.dispatch(setLoading(false))
+        
+        if (result.status === 200) {
+            if (result.data.data[0].Row.length > 0) {
+                store.dispatch(setAdmin(result.data.data[0].Row))
+                store.dispatch(setAdminTotal(result.data.data[0].Total[0].total))
+            } else {
+                store.dispatch(setAdmin([]))
+                store.dispatch(setAdminTotal(0))
                 ErrorToast("No data found.")
             }
         } else {
@@ -150,7 +175,6 @@ export const deleteUserById = async (id) => {
         let url = BaseURL + "/" + id;
         const result = await axios.delete(url, AxiosHeader);
         if (result.status === 200) {
-            debugger
             SuccessToast("User Deleted! ")
 
         } else {
