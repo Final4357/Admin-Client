@@ -4,22 +4,15 @@ import { useSelector } from 'react-redux';
 import { jobDetailsById } from '../../apiRequest/JobRequest';
 
 const JobInfoModel = ({setShowModal}) => {
-
-
     let Jobdetails = useSelector((state) => (state.job.JobDetails));
     let selectedJob = useSelector((state) => (state.job.selectedJob));
 
-   
     useEffect(() => {
         (async () => {
             await jobDetailsById(selectedJob);
         })();
     }, [selectedJob])
 
-
-
-
-    
     return (
         <Fragment>
             <div

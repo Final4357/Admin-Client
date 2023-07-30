@@ -2,7 +2,7 @@ import React from 'react'
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
-const ResetPassword = () => {
+const ForgetPassword = () => {
     return (
         <Fragment>
             <section >
@@ -31,7 +31,7 @@ const ResetPassword = () => {
                                     //onClick={onSend}
                                     type="submit" className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">Send Password Reset Mail</button>
                                 <p class="mb-3 block text-black dark:text-white">
-                                    Don’t have an account yet? <Link to="/sign-up" className="font-medium text-[#2C1654] hover:underline">Sign up</Link>
+                                    Going back to signin? <Link to="/auth/signin" className="font-medium text-[#2C1654] hover:underline">Sign In</Link>
                                 </p>
                             </div>
                         </div>
@@ -42,4 +42,4 @@ const ResetPassword = () => {
     )
 }
 
-export default ResetPassword
+export default ForgetPassword

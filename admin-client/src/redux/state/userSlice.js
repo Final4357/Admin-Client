@@ -9,10 +9,25 @@ export const userSlice = createSlice({
     totalAlumni: 0,
     totalUser: 0,
     totalAdmin: 0,
-    id: null,
     profileDetails: null,
+    id: null,
     students: [],
     loading: false,
+    FormValue: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        studentId:'',
+        position:'',
+        company:'',
+        degree:'',
+        dept:'',
+        batch:'',
+        gender:'',
+        phone: '',
+        address: '',
+        photo:null
+    }
   },
   reducers: {
     setAlumni: (state, action)=>{
@@ -42,8 +57,14 @@ export const userSlice = createSlice({
     setLoading:(state, action)=>{
         state.loading = action.payload
     },
+    onChangeInput: (state, action)=>{
+        state.FormValue[`${action.payload.name}`] = action.payload.value
+    },
+    resetFormInput: (state, action)=>{
+        Object.keys(state.FormValue).forEach((i)=>state.FormValue[i] = '')
+    }
   }
 })
 
-export const {setAlumni,setUser,setAdmin, setAlumniTotal,setUserTotal,setAdminTotal, setDetails, setLoading, setID} = userSlice.actions
+export const {onChangeInput,resetFormInput,setAlumni,setUser,setAdmin, setAlumniTotal,setUserTotal,setAdminTotal, setDetails, setLoading, setID} = userSlice.actions
 export default userSlice.reducer

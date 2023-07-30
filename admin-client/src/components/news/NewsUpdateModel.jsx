@@ -1,8 +1,12 @@
-import React, { Fragment, useRef } from 'react'
-import { getBase64 } from '../../helper/formHelper';
+import React, { Fragment, useEffect, useRef } from 'react'
+import { ErrorToast, IsEmpty, getBase64 } from '../../helper/formHelper';
+import { useSelector } from 'react-redux';
+import { newsDetailsById, updateNews } from '../../apiRequest/newsRequest';
 
-const NewsUpdateModel = ({ setShowUpdateModal }) => {
-  let userImgRef, userImgView = useRef()
+const NewsUpdateModel = ({ setShowUpdateModal, setUpdate }) => {
+  let topicRef, newFromRef, newsLinkRef, descRef, userImgRef, userImgView = useRef()
+  let selcetNewId = useSelector((state)=>state.news.newsId)
+  let newsDetails = useSelector((state)=>state.news.newsDetails)
 
   const previewImage = () => {
     let ImgFile = userImgRef.files[0];
@@ -10,6 +14,38 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
       userImgView.src = base64Img;
     })
   }
+
+  useEffect(() => {
+    (async () => {
+        await newsDetailsById(selcetNewId);
+    })();
+  }, [selcetNewId])
+
+  const onUpdate = async () =>{
+    if (IsEmpty(topicRef.value)) {
+      ErrorToast("Topic required !");
+    } else if (IsEmpty(newFromRef.value)) {
+      ErrorToast("News source Required !");
+    } else if (IsEmpty(newsLinkRef.value)) {
+      ErrorToast("News Link Required !");
+    } else if (IsEmpty(descRef.value)) {
+      ErrorToast("News description Required !");
+    }else{
+        const formData = new FormData()
+        formData.append('topic', topicRef.value)
+        formData.append('newsFrom', newFromRef.value)
+        formData.append('newsLink', newsLinkRef.value)
+        formData.append('smallDesc', descRef.value)
+        if(userImgRef.files[0]) formData.append('photo', userImgRef.files[0])
+        // else formData.append('photo', "")
+        const result = await updateNews(formData, selcetNewId)
+        if(result) {
+          setShowUpdateModal(false)
+          setUpdate(true)
+        }
+      }
+  }
+
   return (
     <Fragment>
       <div
@@ -38,7 +74,8 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                     Topic
                   </label>
                   <input
-                    //  ref={(input) => (topicRef = input)}
+                    ref={(input) => (topicRef = input)}
+                    defaultValue={newsDetails?.topic}
                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     type="text"
                     id="topic"
@@ -57,7 +94,8 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                     Source
                   </label>
                   <input
-                    //  ref={(input) => (titleRef = input)}
+                    ref={(input) => (newFromRef = input)}
+                    defaultValue={newsDetails?.newsFrom}
                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     type="text"
                     id="source"
@@ -73,7 +111,8 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                     News Link
                   </label>
                   <input
-                    //  ref={(input) => (linktoRef = input)}
+                    ref={(input) => (newsLinkRef = input)}
+                    defaultValue={newsDetails?.newsLink}
                     class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     type="text"
                     id="link"
@@ -90,7 +129,8 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                   Description (100 words)
                 </label>
                 <textarea
-                  //  ref={(input) => (descriptionRef = input)}
+                  ref={(input) => (descRef = input)}
+                  defaultValue={newsDetails?.smallDesc}
                   id="desc"
                   rows="3"
                   class="w-full resize-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -101,7 +141,7 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                 id="FileUpload"
                 className="relative block w-full cursor-pointer appearance-none rounded border-2 border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5"
               >
-                <img class="w-full absolute top-0 left-0 h-full z-50 object-fill" ref={(input) => userImgView = input} alt="" />
+                <img class="w-full absolute top-0 left-0 h-full z-50 object-fill" src={newsDetails?.photo.url} ref={(input) => userImgView = input} alt="" />
                 <input
                   type="file"
                   accept="image/*"
@@ -145,8 +185,8 @@ const NewsUpdateModel = ({ setShowUpdateModal }) => {
                   <p>(max, 800 X 800px)</p>
                 </div>
               </div>
-              <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                Create
+              <button onClick={onUpdate} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                Save
               </button>
             </div>
           </div>

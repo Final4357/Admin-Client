@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
-import ResetPassword from '../../components/authentication/ResetPassword';
+import ForgetPassword from '../../components/authentication/ForgetPassword';
 
-const ResetPasswordPage = () => {
+const ForgetPasswordPage = () => {
   return (
     <Fragment>
     <main class="main bg-white px-2 md:py-6 rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-boxdark">
-        <ResetPassword/>
+        <ForgetPassword/>
     </main>
 </Fragment>
   );
 };
 
-export default ResetPasswordPage;
+export default ForgetPasswordPage;

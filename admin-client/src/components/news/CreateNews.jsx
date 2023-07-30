@@ -1,8 +1,11 @@
 import React, { Fragment, useRef } from 'react'
-import { getBase64 } from '../../helper/formHelper';
+import { ErrorToast, IsEmpty, getBase64 } from '../../helper/formHelper';
+import { newsCreateRequest } from '../../apiRequest/newsRequest';
+import { useNavigate } from 'react-router-dom';
 
 const CreateNews = () => {
-  let userImgRef, userImgView = useRef()
+  let topicRef, newFromRef, newsLinkRef, descRef, userImgRef, userImgView = useRef()
+  const navigate = useNavigate()
 
   const previewImage = () => {
     let ImgFile = userImgRef.files[0];
@@ -10,6 +13,30 @@ const CreateNews = () => {
       userImgView.src = base64Img;
     })
   }
+
+  const onCreate = async () =>{
+    if (IsEmpty(topicRef.value)) {
+      ErrorToast("Topic required !");
+    } else if (IsEmpty(newFromRef.value)) {
+      ErrorToast("News source Required !");
+    } else if (IsEmpty(newsLinkRef.value)) {
+      ErrorToast("News Link Required !");
+    } else if (IsEmpty(descRef.value)) {
+      ErrorToast("News description Required !");
+    }else if (!userImgRef.files[0]) {
+      ErrorToast("Image is Required !");
+    }else{
+        const formData = new FormData()
+        formData.append('topic', topicRef.value)
+        formData.append('newsFrom', newFromRef.value)
+        formData.append('newsLink', newsLinkRef.value)
+        formData.append('smallDesc', descRef.value)
+        formData.append('photo', userImgRef.files[0])
+        const result = await newsCreateRequest(formData)
+        if(result) navigate('/news/newslist')
+      }
+  }
+
   return (
     <Fragment>
       <div class="w-full max-w-xl mx-auto">
@@ -26,7 +53,7 @@ const CreateNews = () => {
                   Topic
                 </label>
                 <input
-                  //  ref={(input) => (topicRef = input)}
+                   ref={(input) => (topicRef = input)}
                   class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   type="text"
                   id="topic"
@@ -45,7 +72,7 @@ const CreateNews = () => {
                   Source
                 </label>
                 <input
-                  //  ref={(input) => (titleRef = input)}
+                   ref={(input) => (newFromRef = input)}
                   class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   type="text"
                   id="source"
@@ -61,7 +88,7 @@ const CreateNews = () => {
                   News Link
                 </label>
                 <input
-                  //  ref={(input) => (linktoRef = input)}
+                   ref={(input) => (newsLinkRef = input)}
                   class="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   type="text"
                   id="link"
@@ -78,7 +105,7 @@ const CreateNews = () => {
                 Description (100 words)
               </label>
               <textarea
-                //  ref={(input) => (descriptionRef = input)}
+                 ref={(input) => (descRef = input)}
                 id="desc"
                 rows="3"
                 class="w-full resize-none rounded-lg border-[1.5px] border-stroke bg-transparent py-2 px-5 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -133,7 +160,7 @@ const CreateNews = () => {
                 <p>(max, 800 X 800px)</p>
               </div>
             </div>
-            <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+            <button onClick={onCreate} className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
               Create
             </button>
           </div>

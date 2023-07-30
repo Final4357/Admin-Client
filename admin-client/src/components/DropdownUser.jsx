@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getUserDetails } from '../helper/sessionHelper';
+import { Logout } from '../apiRequest/authRequest';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const onLogout = async () => {
+    if (await Logout())
+        window.location.href = '/auth/signin'
+  }
 
   // close on click outside
   useEffect(() => {
@@ -43,13 +50,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {getUserDetails().firstname}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">Admin</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img className='rounded-full object-fill' src="data:image/jpeg;base64,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" alt="User" />
+          <img className='rounded-full object-fill' src={getUserDetails()?.photo?.url ? getUserDetails().photo.url : "data:image/jpeg;base64,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"} alt="User" />
         </span>
 
         <svg
@@ -131,7 +138,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button onClick={onLogout} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"

@@ -5,10 +5,12 @@ import "../src/assets/css/style.css"
 import Loader from './components/Loader'
 import Dashboard from './pages/dashboard/Dashboard'
 import { Toaster } from 'react-hot-toast'
+import ForgetPasswordPage from './pages/Authentication/ForgetPasswordPage'
 import SignInPage from './pages/Authentication/SignInPage'
-import ResetPasswordPage from './pages/Authentication/ResetPasswordPage'
-import ProfilePage from './pages/profile/ProfilePage'
-import AdminlistPage from './pages/user/AdminlistPage'
+import { ProtectedRoute } from './helper/protectedRoute'
+const ProfilePage = lazy(() => import('./pages/profile/ProfilePage'))
+const AdminlistPage = lazy(() => import('./pages/user/AdminlistPage'))
+const AddAdminPage = lazy(() => import('./pages/user/AddAdminPage'))
 const CreateJobpage = lazy(() => import('./pages/job/CreateJobpage'))
 const JoblistPage = lazy(() => import('./pages/job/JoblistPage'))
 const CreateEventPage = lazy(() => import('./pages/event/CreateEventPage'))
@@ -33,9 +35,9 @@ function App() {
     <Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/auth/signin" element={<SignInPage/>} />
-          <Route path="/resetpass" element={<ResetPasswordPage />} />
-          <Route element={<DefaultLayout />} >
+          <Route path="/auth/signin" element={<SignInPage />} />
+          <Route path="/forgetpass" element={<ForgetPasswordPage />} />
+          <Route element={<ProtectedRoute Component={DefaultLayout} />} >
             <Route index element={< Dashboard />} />
             <Route path='/calendar' element={< Loader />} />
             <Route
@@ -103,7 +105,7 @@ function App() {
               }
             />
             <Route
-              path="/users/alumni/:id"
+              path="users/alumni/:id"
               element={
                 <Suspense fallback={<Loader />}>
                   <AddAlumniPage />
@@ -119,7 +121,15 @@ function App() {
               }
             />
             <Route
-              path="/users/admin"
+              path="/users/createadmin"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <AddAdminPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/users/adminlist"
               element={
                 <Suspense fallback={<Loader />}>
                   <AdminlistPage />

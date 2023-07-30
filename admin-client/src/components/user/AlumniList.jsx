@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Loader from '../Loader'
 import { store } from '../../redux/store/store'
-import { alumniListRequest, deleteAlumniById } from '../../apiRequest/userRequest'
+import { alumniListRequest, deleteUserById } from '../../apiRequest/userRequest'
 import { setID } from '../../redux/state/userSlice'
 
 const AlumniList = ({ setShowModal }) => {
@@ -17,7 +17,7 @@ const AlumniList = ({ setShowModal }) => {
   const [pageNo, setPageNo] = useState(0);
 
   const onDelete = async (id) => {
-    await deleteAlumniById(id);
+    await deleteUserById(id);
     setUpdate(true);
 
   };
@@ -93,7 +93,7 @@ const AlumniList = ({ setShowModal }) => {
                         </td>
                         <td className="h-fit border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                           <p className="text-black dark:text-white">
-                            +8801010101010
+                           {item.phone}
                           </p>
                         </td>
                         <td className="h-fit border-b border-[#eee] py-5 px-4 dark:border-strokedark">
@@ -121,7 +121,6 @@ const AlumniList = ({ setShowModal }) => {
                                 />
                               </svg>
                             </button>
-                            {/* {showModal && mainModal} */}
 
                             <button onClick={() => onDelete(item._id)}>
                               <svg

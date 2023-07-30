@@ -34,7 +34,7 @@ const NewsInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Topic </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{newsDetails?.topic}</p>
+                                <p class="w-2/3 ms-6 text-base dark:text-gray-300 text-gray-600">{newsDetails?.topic}</p>
                             </div>
                             <div className='w-full flex'>
                                 <div className='w-[110px] flex justify-between'>
@@ -55,7 +55,7 @@ const NewsInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">News link</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{newsDetails?.newsLink}</p>
+                                <p class="w-2/3 ms-6 text-base dark:text-gray-300 text-gray-600">{newsDetails?.newsLink}</p>
                             </div>
                         </div>
                     </div>

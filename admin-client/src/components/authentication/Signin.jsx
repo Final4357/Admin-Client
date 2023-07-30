@@ -77,14 +77,13 @@ const Signin = () => {
                                             <label for="remember" className="mb-3 block text-black dark:text-white">Remember me</label>
                                         </div>
                                     </div>
-                                    <Link to="/forgetPassword" className="mb-3 block text-black dark:text-white">Forgot password?</Link>
+                                    <Link to="/forgetpass" className="mb-3 block text-black dark:text-white">Forgot password?</Link>
                                 </div>
                                 <button
                                     onClick={onLogin} 
-                                    type="submit" className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">Sign in</button>
-                               <p class="mb-3 block text-black dark:text-white">
-                                    Don’t have an account yet? <Link to="/sign-up" className="font-medium text-[#2C1654] hover:underline">Sign up</Link>
-                                </p>
+                                    type="submit" className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+                                    Sign in
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,32 @@
 import axios from "axios";
 import { store } from "../redux/store/store";
-import { ErrorToast, SuccessToast } from "../helper/formHelper";
 import { setLoading, setNews, setNewsDetails, setNewsTotal } from "../redux/state/newsSlice";
-// import { ErrorToast } from "../helper/formHelper.js";
  import { getToken } from "../helper/sessionHelper.js";
+import { ErrorToast, SuccessToast } from "../helper/formHelper";
 const BaseURL = "http://localhost:8081/api/news"
 //  const BaseURL = "https://iiuc-alumni.onrender.com/api/news"
  const AxiosHeader = { headers: { "token": getToken() } }
+
+ export const newsCreateRequest = (data) => {
+    let URL = BaseURL + "/";
+    return axios.post(URL, data, AxiosHeader).then((res) => {
+        if (res.status === 200) {
+            SuccessToast("News has been Created")
+            return true;
+        } else {
+            ErrorToast("Something Went Wrong")
+            return false;
+        }
+    }).catch((err) => {
+        if (err.response.data.status === 404) {
+            ErrorToast(err.response.data.message)
+            return false;
+        } else {
+            ErrorToast("Something Went Wrong")
+            return false;
+        }
+    })
+}
 
 export const newsDetailsById = async (id) => {
     try {
@@ -14,7 +34,6 @@ export const newsDetailsById = async (id) => {
         const result = await axios.get(url,AxiosHeader);
         if (result.status === 200) {
             if (result.data.data.length > 0) {
-                
                 store.dispatch(setNewsDetails(result.data.data[0]))
             } else {
                 store.dispatch(setNewsDetails(null))
@@ -32,7 +51,7 @@ export const updateNews = (formData, id) =>{
     let URL = BaseURL + "/"+id;
     return axios.put(URL, formData,AxiosHeader).then((res) => {
         if (res.status === 200) {
-            SuccessToast("Alumni Details Updated")
+            SuccessToast("News Details Updated.")
             return true;
         } else {
             ErrorToast("Something Went Wrong")
@@ -50,6 +69,21 @@ export const updateNews = (formData, id) =>{
             return false;
         }
     })
+}
+
+export const deleteNewsById = async (id) => {
+    try {
+        let url = BaseURL + "/" + id;
+        const result = await axios.delete(url, AxiosHeader);
+        if (result.status === 200) {
+            SuccessToast("News Deleted!")
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+
+        ErrorToast("Something went wrong.")
+    }
 }
 
 export const newsListRequest = async (pageNo, perPage, searchKey) => {

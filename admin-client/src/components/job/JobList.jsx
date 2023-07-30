@@ -13,14 +13,10 @@ const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
     const [update, setUpdate] = useState(false);
     let TotalJob = useSelector((state) => state.job.TotalJob)
     const loading = useSelector((state) => state.job.loading)
-
     const [pageNo, setPageNo] = useState(0);
-
-  
 
     if(!showUpdateModal){
         store.dispatch(setJobDetails(null))
-
     }
     const handlePageClick = async (e) => {
         setPageNo(e.selected)
@@ -28,31 +24,22 @@ const JobList = ({ setShowModal, setShowUpdateModal,showUpdateModal }) => {
 
     const onUpdate = (id) => {
         store.dispatch(setselectedJob(id))
-        setShowUpdateModal(true);
-
-       
-        
+        setShowUpdateModal(true); 
       };
 
       const onDelete = async (id) => {
         await deleteJobById(id);
         setUpdate(true);
-    
       };
 
       const OnView = (id) => {
         store.dispatch(setselectedJob(id))
         setShowModal(true);
-       
-        
       };
       useEffect(() => {
         cratedjobListRequest(pageNo + 1, 5, "0")
         setUpdate(false);
     }, [pageNo,update])
-
-
-
 
     return (
         <Fragment>

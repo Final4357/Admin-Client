@@ -8,7 +8,18 @@ export const eventSlice = createSlice({
         eventList: [],
         Total: 0,
         eventId:null,
-        eventDetails:null
+        FormValue: {
+            title: '',
+            topic: '',
+            venue: '',
+            link:'',
+            date:'',
+            startTime:'',
+            endTime:'',
+            eventWebsite:'',
+            openTo:[],
+            desc:''
+        }
     },
     reducers:{
         setLoading: (state, action)=>{
@@ -26,11 +37,17 @@ export const eventSlice = createSlice({
         setEventId:(state, action)=>{
             state.eventId = action.payload
         },
-        setEventDetails:(state, action)=>{
-            state.eventDetails = action.payload
+        onChangeInput: (state, action)=>{
+            state.FormValue[`${action.payload.name}`] = action.payload.value
+        },
+        resetFormInput: (state, action)=>{
+            Object.keys(state.FormValue).forEach((i)=> i=='openTo' ? state.FormValue[i] = [] : state.FormValue[i] = '')
+        },
+        setOpenTo:(state, action)=>{
+            state.FormValue.openTo = action.payload
         }
     }
 })
 
-export const { setLoading, setPageNo, setEvent, setEventTotal, setEventId, setEventDetails } = eventSlice.actions
+export const { setLoading, setPageNo, setEvent, setEventTotal, setEventId, setEventDetails, onChangeInput, resetFormInput, setOpenTo } = eventSlice.actions
 export default eventSlice.reducer

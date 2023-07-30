@@ -1,30 +1,43 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useSelector } from 'react-redux'
-import { newsListRequest } from '../../apiRequest/newsRequest'
+import { deleteNewsById, newsListRequest } from '../../apiRequest/newsRequest'
 import { store } from '../../redux/store/store'
-import { setNewsId, setPageNo } from '../../redux/state/newsSlice'
+import { setNewsDetails, setNewsId } from '../../redux/state/newsSlice'
 import Loader from '../Loader'
 
-const NewsList = ({ setShowModal, setShowUpdateModal }) => {
+const NewsList = ({ setShowModal, showUpdateModal, setShowUpdateModal, update, setUpdate }) => {
     const news = useSelector((state) => state.news.newsList)
     const totalNews = useSelector((state) => state.news.Total)
-    // const pageNo = useSelector((state) => state.news.pageNo)
     const loading = useSelector((state) => state.news.loading)
     const [pageNo, setPageNo] = useState(0)
 
+    if(!showUpdateModal){
+        store.dispatch(setNewsDetails(null))
+    }
+
     useEffect(() => {
         newsListRequest(pageNo + 1, 3, "")
-    }, [pageNo])
+        if(update) setUpdate(false);
+    }, [pageNo, update])
 
     const handlePageClick = async (e) => {
-        // store.dispatch(setPageNo(e.selected))
         setPageNo(e.selected)
     };
 
     const onView = (id) => {
         store.dispatch(setNewsId(id))
         setShowModal(true)
+    }
+
+    const onDelete = async (id) => {
+        await deleteNewsById(id);
+        setUpdate(true);
+    };
+
+    const onUpdate = (id) =>{
+        store.dispatch(setNewsId(id))
+        setShowUpdateModal(true)
     }
 
     return (
@@ -94,9 +107,8 @@ const NewsList = ({ setShowModal, setShowUpdateModal }) => {
                                                                     />
                                                                 </svg>
                                                             </button>
-                                                            {/* {showModal && mainModal} */}
 
-                                                            <button>
+                                                            <button onClick={()=> onDelete(item._id)}>
                                                                 <svg
                                                                     className="fill-current"
                                                                     width="18"
@@ -124,7 +136,7 @@ const NewsList = ({ setShowModal, setShowUpdateModal }) => {
                                                                 </svg>
                                                             </button>
 
-                                                            <button onClick={() => setShowUpdateModal(true)}>
+                                                            <button onClick={() => onUpdate(item._id)}>
                                                                 <svg className='h-5 w-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0h24v24H0z" /> <path d="M21 6.757l-2 2V4h-9v5H5v11h14v-2.757l2-2v5.765a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 20.993V8l6.003-6h10.995C20.55 2 21 2.455 21 2.992v3.765zm.778 2.05l1.414 1.415L15.414 18l-1.416-.002.002-1.412 7.778-7.778z" /> </g> </svg>
                                                             </button>
                                                         </div>

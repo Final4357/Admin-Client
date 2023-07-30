@@ -110,7 +110,6 @@ const StudendList = ({ setShowModal }) => {
                                 />
                               </svg>
                             </button>
-                            {/* {showModal && mainModal} */}
 
                             <button onClick={() => onDelete(item._id)}>
                               <svg
@@ -139,8 +138,6 @@ const StudendList = ({ setShowModal }) => {
                                 />
                               </svg>
                             </button>
-
-
                           </div>
                         </td>
                       </tr>

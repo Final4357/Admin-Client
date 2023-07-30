@@ -1,16 +1,17 @@
-import React, { Fragment, useEffect } from 'react'
+import React from 'react'
+import { useEffect } from 'react'
+import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { userDetailsById } from '../../apiRequest/userRequest'
 
-const AlumniInfoModel = ({ setShowModal }) => {
+const AdminInfoModel = ({ setShowModal }) => {
     const id = useSelector((state) => state.user.id)
-    const profileDetails = useSelector((state) => state.user.FormData)
+    const profileDetails = useSelector((state) => state.user.FormValue)
     useEffect(() => {
         userDetailsById(id)
     }, [id])
-
-    return (
-        <Fragment>
+  return (
+    <Fragment>
             <div
                 className="flex justify-center items-center  fixed inset-0 z-999 outline-none focus:outline-none"
             >
@@ -44,55 +45,6 @@ const AlumniInfoModel = ({ setShowModal }) => {
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Student ID</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.studentId}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Position</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.position}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Company</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.company}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Degree</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.degree}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Department</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.dept}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Batch</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.batch}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
-                                    <p class="text-base font-semibold dark:text-white text-gray-800">Gender</p>
-                                    <span className='font-bold'>:</span>
-                                </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{profileDetails?.gender}</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <div className='w-[120px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Contact No</p>
                                     <span className='font-bold'>:</span>
                                 </div>
@@ -110,7 +62,7 @@ const AlumniInfoModel = ({ setShowModal }) => {
                 </div>
             </div>
         </Fragment>
-    )
+  )
 }
 
-export default AlumniInfoModel
+export default AdminInfoModel

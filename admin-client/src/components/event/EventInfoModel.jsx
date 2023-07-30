@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux'
 import moment from 'moment';
 import { eventDetailsById } from '../../apiRequest/eventRequest'
 import { useEffect } from 'react'
+import { T24hrTo12hr } from '../../helper/timeConvert';
 
 const EventInfoModel = ({setShowModal}) => {
     const id = useSelector((state) => state.event.eventId)
-    const eventDetails = useSelector((state) => state.event.eventDetails)
+    const FormValue = useSelector((state) => (state.event.FormValue))
     useEffect(()=>{
         eventDetailsById(id)
     },[id])
@@ -35,56 +36,56 @@ const EventInfoModel = ({setShowModal}) => {
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Title </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.title}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.title}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Topic </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.topic}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.topic}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Venue </p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.venue}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.venue}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Date</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{moment(eventDetails.date).format("D MMM, YYYY")}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{moment(FormValue.date).format("D MMM, YYYY")}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Time</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.startTime+" - "+eventDetails.endTime}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{T24hrTo12hr(FormValue.startTime)+" - "+T24hrTo12hr(FormValue.endTime)}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Event Website</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.eventWebsite}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.eventWebsite}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Link (optionl)</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.link}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.link}</p>
                             </div>
                             <div className='flex items-center'>
                                 <div className='w-[130px] flex justify-between'>
                                     <p class="text-base font-semibold dark:text-white text-gray-800">Open For</p>
                                     <span className='font-bold'>:</span>
                                 </div>
-                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{eventDetails.openTo.map((ele, i)=>ele+", ")}</p>
+                                <p class="ms-6 text-base dark:text-gray-300 text-gray-600">{FormValue.openTo.map((ele, i)=>ele+", ")}</p>
                             </div>
                         </div>
                     </div>

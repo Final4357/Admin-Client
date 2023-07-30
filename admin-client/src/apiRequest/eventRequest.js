@@ -1,7 +1,8 @@
 import axios from "axios";
+import moment from 'moment';
 import { store } from "../redux/store/store";
 import { ErrorToast, SuccessToast } from "../helper/formHelper";
-import { setEvent, setEventDetails, setEventTotal, setLoading } from "../redux/state/eventSlice";
+import { onChangeInput, resetFormInput, setEvent, setEventDetails, setEventTotal, setLoading } from "../redux/state/eventSlice";
 import { getToken } from "../helper/sessionHelper.js";
 const BaseURL = "http://localhost:8081/api/event"
 //  const BaseURL = "https://iiuc-alumni.onrender.com/api/event"
@@ -34,9 +35,18 @@ export const eventDetailsById = async (id) => {
         const result = await axios.get(url);
         if (result.status === 200) {
             if (result.data.data.length > 0) {
-                store.dispatch(setEventDetails(result.data.data[0]))
+                store.dispatch(onChangeInput({ name: "title", value: result.data.data[0].title }));
+                store.dispatch(onChangeInput({ name: "topic", value: result.data.data[0].topic }));
+                store.dispatch(onChangeInput({ name: "venue", value: result.data.data[0].venue }));
+                store.dispatch(onChangeInput({ name: "link", value: result.data.data[0].link }));
+                store.dispatch(onChangeInput({ name: "date", value: result.data.data[0].date }));
+                store.dispatch(onChangeInput({ name: "startTime", value: result.data.data[0].startTime }));
+                store.dispatch(onChangeInput({ name: "endTime", value: result.data.data[0].endTime }));
+                store.dispatch(onChangeInput({ name: "eventWebsite", value: result.data.data[0].eventWebsite }));
+                store.dispatch(onChangeInput({ name: "openTo", value: result.data.data[0].openTo }));
+                store.dispatch(onChangeInput({ name: "desc", value: result.data.data[0].desc }));
             } else {
-                store.dispatch(setEventDetails(null))
+                store.dispatch(resetFormInput())
                 ErrorToast("No data found.")
             }
         } else {
@@ -49,9 +59,9 @@ export const eventDetailsById = async (id) => {
 
 export const updateEvent = (formData, id) =>{
     let URL = BaseURL + "/"+id;
-    return axios.put(URL, formData).then((res) => {
+    return axios.put(URL, formData, AxiosHeader).then((res) => {
         if (res.status === 200) {
-            SuccessToast("Alumni Details Updated")
+            SuccessToast("Event Details Updated")
             return true;
         } else {
             ErrorToast("Something Went Wrong")

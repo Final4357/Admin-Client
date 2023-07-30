@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import Loader from '../Loader'
 import moment from 'moment';
 import { Link } from 'react-router-dom'
+import { T24hrTo12hr } from '../../helper/timeConvert'
 
 const EventList = ({ setShowModal, setShowUpdateModal }) => {
     const event = useSelector((state) => state.event.eventList)
@@ -72,7 +73,7 @@ const EventList = ({ setShowModal, setShowUpdateModal }) => {
                                                         <h5 className="font-medium text-black dark:text-white">
                                                             {moment(item.date).format("D MMM, YYYY")}
                                                         </h5>
-                                                        <p className="text-sm">{item.startTime + " - " + item.endTime}</p>
+                                                        <p className="text-sm">{T24hrTo12hr(item.startTime)+" - "+T24hrTo12hr(item.endTime)}</p>
                                                     </td>
                                                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                         <div className="flex items-center space-x-3.5">

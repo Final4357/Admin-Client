@@ -5,6 +5,7 @@ import NewsInfoModel from '../../components/news/NewsInfoModel';
 import NewsUpdateModel from '../../components/news/NewsUpdateModel';
 
 const NewsListPage = () => {
+    const [update, setUpdate] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
 
@@ -12,10 +13,10 @@ const NewsListPage = () => {
         <Fragment>
             <Breadcrumb pageName="News list" />
             <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-                <NewsList setShowModal={setShowModal} setShowUpdateModal={setShowUpdateModal} />
+                <NewsList setShowModal={setShowModal} showUpdateModal={showUpdateModal} setShowUpdateModal={setShowUpdateModal} update={update} setUpdate={setUpdate}/>
             </div>
             {showModal && <NewsInfoModel setShowModal={setShowModal} />}
-            {showUpdateModal && <NewsUpdateModel setShowUpdateModal={setShowUpdateModal} />}
+            {showUpdateModal && <NewsUpdateModel setShowUpdateModal={setShowUpdateModal} setUpdate={setUpdate}/>}
         </Fragment>
     )
 }
