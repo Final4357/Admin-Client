@@ -105,3 +105,18 @@ export const eventListRequest = async (pageNo, perPage, searchKey) => {
     }
 }
 
+export const deleteEventById = async (id) => {
+    try {
+        let url = BaseURL + "/" + id;
+        const result = await axios.delete(url, AxiosHeader);
+        if (result.status === 200) {
+            SuccessToast("Event Deleted!")
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+
+        ErrorToast("Something went wrong.")
+    }
+}
+

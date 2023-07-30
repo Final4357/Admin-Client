@@ -2,23 +2,28 @@ import React, { Fragment } from 'react'
 import ReactPaginate from 'react-paginate'
 import { store } from '../../redux/store/store'
 import { setEventId, setPageNo } from '../../redux/state/eventSlice'
-import { eventListRequest } from '../../apiRequest/eventRequest'
+import { deleteEventById, eventListRequest } from '../../apiRequest/eventRequest'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Loader from '../Loader'
 import moment from 'moment';
 import { Link } from 'react-router-dom'
 import { T24hrTo12hr } from '../../helper/timeConvert'
+import { useState } from 'react'
 
-const EventList = ({ setShowModal, setShowUpdateModal }) => {
+const EventList = ({ setShowModal }) => {
+    const [update, setUpdate] = useState(false)
     const event = useSelector((state) => state.event.eventList)
     const totalEvent = useSelector((state) => state.event.Total)
     const pageNo = useSelector((state) => state.event.pageNo)
     const loading = useSelector((state) => state.event.loading)
 
     useEffect(() => {
-        eventListRequest(pageNo, 3, "")
-    }, [pageNo])
+        (async () => {
+        eventListRequest(pageNo, 4, "")
+        setUpdate(false)
+    })();
+    }, [pageNo, update])
 
     const handlePageClick = async (e) => {
         store.dispatch(setPageNo(e.selected + 1))
@@ -28,6 +33,11 @@ const EventList = ({ setShowModal, setShowUpdateModal }) => {
         store.dispatch(setEventId(id))
         setShowModal(true)
     }
+
+    const onDelete = async (id) => {
+        await deleteEventById(id);
+        setUpdate(true);
+    };
     
     return (
         <Fragment>
@@ -98,7 +108,7 @@ const EventList = ({ setShowModal, setShowUpdateModal }) => {
                                                                 </svg>
                                                             </button>
 
-                                                            <button>
+                                                            <button onClick={()=>onDelete(item._id)}>
                                                                 <svg
                                                                     className="fill-current"
                                                                     width="18"
@@ -151,7 +161,7 @@ const EventList = ({ setShowModal, setShowUpdateModal }) => {
                                         breakLabel="..."
                                         breakClassName="page-item"
                                         breakLinkClassName="page-link"
-                                        pageCount={Math.ceil(totalEvent / 3)}
+                                        pageCount={Math.ceil(totalEvent / 4)}
                                         marginPagesDisplayed={2}
                                         pageRangeDisplayed={5}
                                         onPageChange={handlePageClick}
