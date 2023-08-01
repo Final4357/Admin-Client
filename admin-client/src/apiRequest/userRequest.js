@@ -240,3 +240,17 @@ export const deleteUserById = async (id) => {
         ErrorToast("Something went wrong.")
     }
 }
+
+export const countRequest = async () => {
+    try {
+        let url = BaseURL + "/count";
+        const result = await axios.get(url, AxiosHeader);
+        if (result.status === 200) {
+            return result.data
+        } else {
+            ErrorToast("Something went wrong.")
+        }
+    } catch (error) {
+        ErrorToast("Something went wrong.")
+    }
+}

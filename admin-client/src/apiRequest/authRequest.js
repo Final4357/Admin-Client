@@ -59,7 +59,6 @@ export const profileDetailsReq = () =>{
         if (res.status === 200) {
             if (res.data.data) {
                 store.dispatch(setDetails(res.data.data))
-                setUserDetails(res.data.data)
             } else {
                 store.dispatch(setDetails(null))
                 ErrorToast("No data found.")
@@ -89,6 +88,7 @@ export const updateProfile = (formData) =>{
     return axios.put(URL, formData, AxiosHeader).then((res) => {
         if (res.status === 200) {
             SuccessToast("Profile Details Updated")
+            setUserDetails(res.data.data)
             return true;
         } else {
             ErrorToast("Something Went Wrong")

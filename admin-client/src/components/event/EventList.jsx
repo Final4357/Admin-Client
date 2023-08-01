@@ -20,7 +20,7 @@ const EventList = ({ setShowModal }) => {
 
     useEffect(() => {
         (async () => {
-        eventListRequest(pageNo, 4, "")
+        await eventListRequest(pageNo, 4, "")
         setUpdate(false)
     })();
     }, [pageNo, update])
