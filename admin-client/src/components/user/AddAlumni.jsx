@@ -110,7 +110,7 @@ const AddAlumni = () => {
                     </h1>
 
                     <div class="profile flex justify-center ">
-                        <img class="w-36 h-36 rounded-full object-fill" ref={(input) => userImgView = input} src={(params.id || FormValue.photo.url) ? FormValue?.photo?.url : "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="" />
+                        <img class="w-36 h-36 rounded-full object-fill" ref={(input) => userImgView = input} src={(params.id || FormValue.photo?.url) ? FormValue?.photo?.url : "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="" />
                         <div class="w-36 h-36 group hover:bg-gray-200 opacity-60 rounded-full absolute flex justify-center items-center cursor-pointer transition duration-500">
                             <img class="hidden absolute group-hover:block w-12" for="file-input" src="https://www.svgrepo.com/show/33565/upload.svg" alt="" />
                             <input
